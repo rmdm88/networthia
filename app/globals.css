@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --bg: 248 250 252;
+  --panel: 255 255 255;
+  --panel-soft: 255 255 255 / 0.72;
+  --text: 9 15 25;
+  --muted: 83 98 122;
+  --line: 148 163 184 / 0.28;
+  --focus: 14 165 233;
+}
+
+.dark {
+  color-scheme: dark;
+  --bg: 3 10 18;
+  --panel: 10 18 30;
+  --panel-soft: 10 18 30 / 0.72;
+  --text: 235 248 255;
+  --muted: 154 168 190;
+  --line: 148 163 184 / 0.14;
+  --focus: 45 212 191;
+}
+
+* {
+  border-color: rgb(var(--line));
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(45, 212, 191, 0.18), transparent 28%),
+    radial-gradient(circle at top right, rgba(56, 189, 248, 0.12), transparent 24%),
+    rgb(var(--bg));
+  color: rgb(var(--text));
+  font-family: Sora, "Segoe UI", system-ui, sans-serif;
+}
+
+.glass {
+  background: rgb(var(--panel-soft));
+  backdrop-filter: blur(18px);
+}
+
+.grid-surface {
+  background-image: linear-gradient(to right, rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.display-font {
+  font-family: "Space Grotesk", Sora, system-ui, sans-serif;
+}
+
+.ui-field {
+  border: 1px solid rgb(var(--line));
+  border-radius: 1rem;
+  background: rgb(var(--panel) / 0.72);
+  color: rgb(var(--text));
+  padding: 0.55rem 0.8rem;
+  outline: none;
+  transition: border-color 140ms ease, box-shadow 140ms ease, background 140ms ease;
+}
+
+.ui-field::placeholder {
+  color: rgb(var(--muted));
+}
+
+.ui-field:focus {
+  border-color: rgb(var(--focus));
+  box-shadow: 0 0 0 3px rgb(var(--focus) / 0.18);
+}
+
+select.ui-field option,
+select.ui-field optgroup {
+  background: rgb(var(--panel));
+  color: rgb(var(--text));
+}
+
+.ui-card {
+  background: rgb(var(--panel) / 0.42);
+  border: 1px solid rgb(var(--line));
+  border-radius: 1rem;
+}
