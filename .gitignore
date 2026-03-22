@@ -4,3 +4,5 @@ npm-debug.log*
 dev.log
 budget-import-from-xlsx.json
 .DS_Store
+
+.vercel
