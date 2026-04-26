@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRef, useState } from "react";
 import { Download, FileJson, Upload } from "lucide-react";
@@ -66,7 +66,7 @@ export function DataManager() {
       description="Все данные хранятся локально в браузере. Здесь можно выгрузить резервную копию в JSON и восстановить ее импортом."
     >
       <section className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
-        <div className="glass rounded-[28px] border p-5">
+        <div className="glass rounded-lg border p-5">
           <div className="mb-4">
             <h3 className="display-font text-2xl font-semibold">Экспорт JSON</h3>
             <p className="text-sm text-[rgb(var(--muted))]">
@@ -75,14 +75,14 @@ export function DataManager() {
           </div>
           <button
             onClick={exportJson}
-            className="inline-flex items-center gap-2 rounded-full bg-cyan-400 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300"
+            className="inline-flex items-center gap-2 rounded bg-[rgb(var(--accent))] px-5 py-3 text-sm font-semibold text-[#06070C] transition hover:bg-[rgb(var(--accent)/0.86)]"
           >
             <Download className="h-4 w-4" />
             Скачать резервную копию
           </button>
         </div>
 
-        <div className="glass rounded-[28px] border p-5">
+        <div className="glass rounded-lg border p-5">
           <div className="mb-4">
             <h3 className="display-font text-2xl font-semibold">Импорт JSON</h3>
             <p className="text-sm text-[rgb(var(--muted))]">
@@ -99,7 +99,7 @@ export function DataManager() {
           />
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="inline-flex items-center gap-2 rounded-full border px-5 py-3 text-sm transition hover:border-cyan-400/60 hover:bg-cyan-500/10"
+            className="inline-flex items-center gap-2 rounded border px-5 py-3 text-sm transition hover:border-[rgb(var(--accent)/0.55)] hover:bg-[rgb(var(--accent)/0.12)]"
           >
             <Upload className="h-4 w-4" />
             Загрузить JSON
@@ -108,9 +108,9 @@ export function DataManager() {
       </section>
 
       <section className="mt-4 grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
-        <div className="glass rounded-[28px] border p-5">
+        <div className="glass rounded-lg border p-5">
           <div className="mb-3 flex items-center gap-2">
-            <FileJson className="h-5 w-5 text-cyan-300" />
+            <FileJson className="h-5 w-5 text-[rgb(var(--accent))]" />
             <h3 className="display-font text-xl font-semibold">Что внутри бэкапа</h3>
           </div>
           <div className="space-y-2 text-sm text-[rgb(var(--muted))]">
@@ -121,15 +121,15 @@ export function DataManager() {
           </div>
         </div>
 
-        <div className="glass rounded-[28px] border p-5">
+        <div className="glass rounded-lg border p-5">
           <h3 className="display-font mb-3 text-xl font-semibold">Статус</h3>
           {status ? (
-            <p className="rounded-2xl border border-emerald-500/35 bg-emerald-500/12 px-4 py-3 text-sm text-emerald-800 dark:text-emerald-200">
+            <p className="rounded border border-emerald-500/35 bg-emerald-500/12 px-4 py-3 text-sm text-emerald-800 dark:text-emerald-200">
               {status}
             </p>
           ) : null}
           {error ? (
-            <p className="rounded-2xl border border-rose-500/35 bg-rose-500/12 px-4 py-3 text-sm text-rose-800 dark:text-rose-200">
+            <p className="rounded border border-rose-500/35 bg-rose-500/12 px-4 py-3 text-sm text-rose-800 dark:text-rose-200">
               {error}
             </p>
           ) : null}
@@ -139,3 +139,4 @@ export function DataManager() {
     </AppShell>
   );
 }
+

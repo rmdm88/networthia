@@ -10,11 +10,12 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Sora", "Segoe UI", "system-ui", "sans-serif"],
-        display: ["Space Grotesk", "Sora", "sans-serif"]
+        sans: ["IBM Plex Sans", "Segoe UI", "system-ui", "sans-serif"],
+        display: ["Cormorant Garamond", "Georgia", "serif"],
+        mono: ["IBM Plex Mono", "ui-monospace", "monospace"]
       },
       boxShadow: {
-        glow: "0 24px 80px rgba(15, 23, 42, 0.16)"
+        glow: "0 20px 70px rgba(0, 0, 0, 0.28)"
       },
       colors: {
         ink: {

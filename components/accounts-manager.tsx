@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Dispatch, SetStateAction, useState } from "react";
 import clsx from "clsx";
@@ -149,7 +149,7 @@ export function AccountsManager() {
       title="Каталог счетов и структура активов"
       description="Управление списком счетов: название, валюта, теги и статус активности. Классификация полностью строится на тегах."
     >
-      <section className="glass rounded-[28px] border p-5">
+      <section className="glass rounded-lg border p-5">
         <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
           <div>
             <h3 className="display-font text-2xl font-semibold">Список счетов</h3>
@@ -162,7 +162,7 @@ export function AccountsManager() {
           </div>
           <button
             onClick={() => setIsCreateOpen((current) => !current)}
-            className="inline-flex items-center gap-2 rounded-full bg-cyan-400 px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300"
+            className="inline-flex items-center gap-2 rounded bg-[rgb(var(--accent))] px-5 py-2.5 text-sm font-semibold text-[#06070C] transition hover:bg-[rgb(var(--accent)/0.86)]"
           >
             {isCreateOpen ? <X className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
             {isCreateOpen ? "Закрыть" : "Добавить счет"}
@@ -170,7 +170,7 @@ export function AccountsManager() {
         </div>
 
         {isCreateOpen ? (
-          <div className="mb-4 rounded-3xl border p-4">
+          <div className="mb-4 rounded-lg border p-4">
             <div className="mb-3 text-sm text-[rgb(var(--muted))]">
               Один счет может одновременно находиться в нескольких тегах.
             </div>
@@ -219,10 +219,10 @@ export function AccountsManager() {
                           }))
                         }
                         className={clsx(
-                          "rounded-full border px-3 py-1.5 text-sm transition",
+                          "rounded border px-3 py-1.5 text-sm transition",
                           selected
-                            ? "border-cyan-500 bg-cyan-500/10 text-cyan-700 dark:text-cyan-200"
-                            : "hover:border-cyan-400/60 hover:bg-cyan-500/10"
+                            ? "border-[rgb(var(--accent)/0.65)] bg-[rgb(var(--accent)/0.12)] text-[rgb(var(--text))] dark:text-[rgb(var(--text))]"
+                            : "hover:border-[rgb(var(--accent)/0.55)] hover:bg-[rgb(var(--accent)/0.12)]"
                         )}
                       >
                         {tag.name}
@@ -237,13 +237,13 @@ export function AccountsManager() {
                     resetCreateForm();
                     setIsCreateOpen(false);
                   }}
-                  className="rounded-full border px-4 py-2 text-sm transition hover:border-slate-400/60"
+                  className="rounded border px-4 py-2 text-sm transition hover:border-slate-400/60"
                 >
                   Отмена
                 </button>
                 <button
                   onClick={addAccount}
-                  className="inline-flex items-center gap-2 rounded-full bg-cyan-400 px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300"
+                  className="inline-flex items-center gap-2 rounded bg-[rgb(var(--accent))] px-5 py-2.5 text-sm font-semibold text-[#06070C] transition hover:bg-[rgb(var(--accent)/0.86)]"
                 >
                   <Plus className="h-4 w-4" />
                   Создать счет
@@ -327,8 +327,8 @@ function SortableAccountCard({
       ref={setNodeRef}
       style={style}
       className={clsx(
-        "rounded-3xl border p-4 transition-[box-shadow,border-color,opacity,transform] duration-200",
-        isDragging ? "border-cyan-400/70 opacity-70 shadow-xl shadow-cyan-500/20" : "hover:border-cyan-300/30"
+        "rounded-lg border p-4 transition-[box-shadow,border-color,opacity,transform] duration-200",
+        isDragging ? "border-[rgb(var(--accent)/0.7)] opacity-70 shadow-xl shadow-black/30" : "hover:border-[rgb(var(--line))]"
       )}
     >
       {isEditing && editingDraft ? (
@@ -384,10 +384,10 @@ function SortableAccountCard({
                       )
                     }
                     className={clsx(
-                      "rounded-full border px-3 py-1.5 text-sm transition",
+                      "rounded border px-3 py-1.5 text-sm transition",
                                   selected
-                                    ? "border-cyan-500 bg-cyan-500/10 text-cyan-700 dark:text-cyan-200"
-                                    : "hover:border-cyan-400/60 hover:bg-cyan-500/10"
+                                    ? "border-[rgb(var(--accent)/0.65)] bg-[rgb(var(--accent)/0.12)] text-[rgb(var(--text))] dark:text-[rgb(var(--text))]"
+                                    : "hover:border-[rgb(var(--accent)/0.55)] hover:bg-[rgb(var(--accent)/0.12)]"
                     )}
                   >
                     {tag.name}
@@ -400,7 +400,7 @@ function SortableAccountCard({
             <button
               onClick={() => onToggleAccount(account.id)}
               className={clsx(
-                "rounded-full border px-4 py-2 text-sm transition",
+                "rounded border px-4 py-2 text-sm transition",
                 account.isActive
                   ? "border-emerald-500/50 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300"
                   : "border-slate-400/30 text-[rgb(var(--muted))]"
@@ -411,13 +411,13 @@ function SortableAccountCard({
             <div className="flex flex-wrap items-center gap-2">
               <button
                 onClick={onSaveEditing}
-                className="rounded-full border border-cyan-500 bg-cyan-500/10 px-4 py-2 text-sm text-cyan-700 transition hover:bg-cyan-500/20 dark:text-cyan-200"
+                className="rounded border border-[rgb(var(--accent)/0.65)] bg-[rgb(var(--accent)/0.12)] px-4 py-2 text-sm text-[rgb(var(--text))] transition hover:bg-[rgb(var(--accent)/0.2)] dark:text-[rgb(var(--text))]"
               >
                 Сохранить
               </button>
               <button
                 onClick={onCancelEditing}
-                className="rounded-full border px-3 py-2 text-sm transition hover:border-rose-400/60 hover:bg-rose-500/10 hover:text-rose-700 dark:hover:text-rose-300"
+                className="rounded border px-3 py-2 text-sm transition hover:border-rose-400/60 hover:bg-rose-500/10 hover:text-rose-700 dark:hover:text-rose-300"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -433,12 +433,12 @@ function SortableAccountCard({
                 {...attributes}
                 {...listeners}
                 type="button"
-                className="cursor-grab touch-none rounded-2xl border p-2 text-[rgb(var(--muted))] transition hover:border-cyan-400/60 hover:bg-cyan-500/10 hover:text-cyan-700 active:cursor-grabbing dark:hover:text-cyan-200"
+                className="cursor-grab touch-none rounded border p-2 text-[rgb(var(--muted))] transition hover:border-[rgb(var(--accent)/0.55)] hover:bg-[rgb(var(--accent)/0.12)] hover:text-[rgb(var(--text))] active:cursor-grabbing dark:hover:text-[rgb(var(--text))]"
                 aria-label={`Переместить счет ${account.name}`}
               >
                 <GripVertical className="h-4 w-4" />
               </button>
-              <span className="rounded-2xl bg-white/5 p-2">
+              <span className="rounded bg-white/5 p-2">
                 <WalletCards className="h-4 w-4" />
               </span>
               <div>
@@ -450,7 +450,7 @@ function SortableAccountCard({
               <button
                 onClick={() => onToggleAccount(account.id)}
                 className={clsx(
-                  "rounded-full border px-4 py-2 text-sm transition",
+                  "rounded border px-4 py-2 text-sm transition",
                   account.isActive
                     ? "border-emerald-500/50 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300"
                     : "border-slate-400/30 text-[rgb(var(--muted))]"
@@ -460,7 +460,7 @@ function SortableAccountCard({
               </button>
               <button
                 onClick={() => onStartEditing(account.id)}
-                className="rounded-full border px-3 py-2 text-sm transition hover:border-cyan-400/60 hover:bg-cyan-500/10 hover:text-cyan-700 dark:hover:text-cyan-200"
+                className="rounded border px-3 py-2 text-sm transition hover:border-[rgb(var(--accent)/0.55)] hover:bg-[rgb(var(--accent)/0.12)] hover:text-[rgb(var(--text))] dark:hover:text-[rgb(var(--text))]"
               >
                 <Pencil className="h-4 w-4" />
               </button>
@@ -472,7 +472,7 @@ function SortableAccountCard({
               if (!tag) return null;
 
               return (
-                <span key={tag.id} className="rounded-full border px-3 py-1 text-xs text-[rgb(var(--muted))]">
+                <span key={tag.id} className="rounded border px-3 py-1 text-xs text-[rgb(var(--muted))]">
                   {tag.name}
                 </span>
               );
@@ -483,3 +483,4 @@ function SortableAccountCard({
     </div>
   );
 }
+

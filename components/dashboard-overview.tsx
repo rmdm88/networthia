@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useMemo, useState } from "react";
 import { Area, AreaChart, CartesianGrid, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
@@ -24,15 +24,15 @@ import {
 import { getAccountTagIds } from "@/lib/tags";
 
 const accountDonutPalette = [
-  "#34d399",
-  "#38bdf8",
-  "#fbbf24",
-  "#818cf8",
-  "#2dd4bf",
-  "#fb923c",
-  "#a78bfa",
-  "#e879f9",
-  "#94a3b8"
+  "#E9E3CD",
+  "#E2563C",
+  "#8D8570",
+  "#A9895D",
+  "#7FBF8F",
+  "#B7A98A",
+  "#C9775A",
+  "#6F7567",
+  "#3E4353"
 ];
 
 export function DashboardOverview() {
@@ -40,7 +40,7 @@ export function DashboardOverview() {
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
 
   const chartTooltipStyle = {
-    borderRadius: 16,
+    borderRadius: 8,
     border: "1px solid rgb(var(--line))",
     background: "rgb(var(--panel) / 0.96)",
     color: "rgb(var(--text))"
@@ -132,13 +132,13 @@ export function DashboardOverview() {
       title="Обзор капитала по срезам и структуре активов"
       description="Динамика капитала, структура по счетам, изменения между срезами и показатели качества данных."
     >
-      <section className="mb-4 glass rounded-[24px] border p-4">
+      <section className="mb-4 glass rounded-lg border p-4">
         <div className="mb-2 flex flex-wrap items-center justify-between gap-3">
           <p className="text-sm text-[rgb(var(--muted))]">Фильтр дашборда по тегам</p>
           {selectedTagIds.length ? (
             <button
               onClick={() => setSelectedTagIds([])}
-              className="rounded-full border px-3 py-1 text-xs transition hover:border-cyan-400/60 hover:bg-cyan-500/10 hover:text-cyan-700 dark:hover:text-cyan-200"
+              className="rounded border px-3 py-1 text-xs transition hover:border-[rgb(var(--accent)/0.55)] hover:bg-[rgb(var(--accent)/0.12)] hover:text-[rgb(var(--text))] dark:hover:text-[rgb(var(--text))]"
             >
               Сбросить
             </button>
@@ -158,10 +158,10 @@ export function DashboardOverview() {
                   )
                 }
                 className={clsx(
-                  "rounded-full border px-3 py-1.5 text-sm transition",
+                  "rounded border px-3 py-1.5 text-sm transition",
                   selected
-                    ? "border-cyan-500 bg-cyan-500/10 text-cyan-700 dark:text-cyan-200"
-                    : "hover:border-cyan-400/60 hover:bg-cyan-500/10"
+                    ? "border-[rgb(var(--accent)/0.65)] bg-[rgb(var(--accent)/0.12)] text-[rgb(var(--text))] dark:text-[rgb(var(--text))]"
+                    : "hover:border-[rgb(var(--accent)/0.55)] hover:bg-[rgb(var(--accent)/0.12)]"
                 )}
               >
                 {tag.name}
@@ -175,11 +175,11 @@ export function DashboardOverview() {
         <h2 className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-[rgb(var(--muted))]">Состояние</h2>
       </section>
       <section className="mb-4 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <article className="glass rounded-[24px] border p-4">
+        <article className="glass rounded-lg border p-4">
           <p className="text-sm text-[rgb(var(--muted))]">Общий капитал</p>
           <p className="display-font mt-2 text-2xl font-semibold">{formatCurrency(currentTotal)}</p>
         </article>
-        <article className="glass rounded-[24px] border p-4">
+        <article className="glass rounded-lg border p-4">
           <p className="text-sm text-[rgb(var(--muted))]">
             Изменение к срезу {previousSnapshot ? `от ${previousSnapshot.date}` : "—"}
           </p>
@@ -194,12 +194,12 @@ export function DashboardOverview() {
           </p>
           <p className="mt-1 text-sm text-[rgb(var(--muted))]">{deltaPct.toFixed(1)}%</p>
         </article>
-        <article className="glass rounded-[24px] border p-4">
+        <article className="glass rounded-lg border p-4">
           <p className="text-sm text-[rgb(var(--muted))]">Ликвидные активы</p>
           <p className="display-font mt-2 text-2xl font-semibold">{formatCompactRub(liquidTotal)}</p>
           <p className="mt-1 text-sm text-[rgb(var(--muted))]">{liquidShare.toFixed(1)}% от капитала</p>
         </article>
-        <article className="glass rounded-[24px] border p-4">
+        <article className="glass rounded-lg border p-4">
           <p className="text-sm text-[rgb(var(--muted))]">Активные счета</p>
           <p className="display-font mt-2 text-2xl font-semibold">{activeAccountsCount}</p>
           <p className="mt-1 text-sm text-[rgb(var(--muted))]">
@@ -212,7 +212,7 @@ export function DashboardOverview() {
         <h2 className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-[rgb(var(--muted))]">Риск и качество</h2>
       </section>
       <section className="mb-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <article className="glass rounded-[24px] border p-4">
+        <article className="glass rounded-lg border p-4">
           <p className="text-sm text-[rgb(var(--muted))]">Просадка от пика</p>
           <p
             className={clsx(
@@ -226,7 +226,7 @@ export function DashboardOverview() {
             {drawdown ? `Пик: ${drawdown.peakDate} (${drawdown.drawdownPct.toFixed(1)}%)` : "Недостаточно данных"}
           </p>
         </article>
-        <article className="glass rounded-[24px] border p-4">
+        <article className="glass rounded-lg border p-4">
           <p className="text-sm text-[rgb(var(--muted))]">Концентрация капитала</p>
           <p className="display-font mt-2 text-2xl font-semibold">{concentration.top3Share.toFixed(1)}%</p>
           <p className="mt-1 text-sm text-[rgb(var(--muted))]">
@@ -234,7 +234,7 @@ export function DashboardOverview() {
           </p>
           <p className="text-xs text-[rgb(var(--muted))]">HHI: {concentration.hhi.toFixed(3)}</p>
         </article>
-        <article className="glass rounded-[24px] border p-4">
+        <article className="glass rounded-lg border p-4">
           <p className="text-sm text-[rgb(var(--muted))]">Качество данных</p>
           <p className="display-font mt-2 text-2xl font-semibold">{dataQuality.coveragePct.toFixed(0)}%</p>
           <p className="mt-1 text-sm text-[rgb(var(--muted))]">
@@ -244,18 +244,18 @@ export function DashboardOverview() {
             {dataQuality.daysSinceLatest === null ? "Нет срезов" : `Последний срез: ${dataQuality.daysSinceLatest} дн. назад`}
           </p>
         </article>
-        <article className="glass rounded-[24px] border p-4">
+        <article className="glass rounded-lg border p-4">
           <p className="text-sm text-[rgb(var(--muted))]">Нужно внимание</p>
           {attentionItems.length ? (
             <div className="mt-2 space-y-2">
               {attentionItems.slice(0, 3).map((item) => (
-                <p key={item} className="rounded-xl border border-amber-500/35 bg-amber-500/12 px-2.5 py-2 text-xs text-amber-800 dark:text-amber-200">
+                <p key={item} className="rounded border border-amber-500/35 bg-amber-500/12 px-2.5 py-2 text-xs text-amber-800 dark:text-amber-200">
                   {item}
                 </p>
               ))}
             </div>
           ) : (
-            <p className="mt-2 rounded-xl border border-emerald-500/35 bg-emerald-500/12 px-2.5 py-2 text-xs text-emerald-800 dark:text-emerald-200">
+            <p className="mt-2 rounded border border-emerald-500/35 bg-emerald-500/12 px-2.5 py-2 text-xs text-emerald-800 dark:text-emerald-200">
               Критичных сигналов нет.
             </p>
           )}
@@ -263,7 +263,7 @@ export function DashboardOverview() {
       </section>
 
       <section className="mb-6">
-        <article className="glass rounded-[24px] border p-4">
+        <article className="glass rounded-lg border p-4">
           <div className="mb-3">
             <h3 className="display-font text-xl font-semibold">Вклад тегов в дельту</h3>
             <p className="text-sm text-[rgb(var(--muted))]">
@@ -294,7 +294,7 @@ export function DashboardOverview() {
       </section>
 
       <section className="mb-6 grid gap-4 xl:grid-cols-[1.3fr_0.7fr] xl:items-stretch">
-        <article className="glass h-full rounded-[28px] border p-5 shadow-glow">
+        <article className="glass h-full rounded-lg border p-5 shadow-glow">
           <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
             <div>
               <h2 className="display-font text-2xl font-semibold">Динамика капитала</h2>
@@ -309,11 +309,11 @@ export function DashboardOverview() {
               <AreaChart data={netWorthSeries}>
                 <defs>
                   <linearGradient id="netWorthFill" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="5%" stopColor="#2dd4bf" stopOpacity={0.7} />
-                    <stop offset="95%" stopColor="#2dd4bf" stopOpacity={0} />
+                    <stop offset="5%" stopColor="#E9E3CD" stopOpacity={0.45} />
+                    <stop offset="95%" stopColor="#E9E3CD" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid vertical={false} stroke="rgba(148,163,184,0.18)" />
+                <CartesianGrid vertical={false} stroke="rgba(233,227,205,0.12)" />
                 <XAxis dataKey="date" tickLine={false} axisLine={false} />
                 <YAxis hide />
                 <Tooltip
@@ -322,14 +322,14 @@ export function DashboardOverview() {
                   itemStyle={{ color: "rgb(var(--text))" }}
                   labelStyle={{ color: "rgb(var(--text))" }}
                 />
-                <Area type="monotone" dataKey="totalRub" stroke="#2dd4bf" strokeWidth={3} fill="url(#netWorthFill)" />
+                <Area type="monotone" dataKey="totalRub" stroke="#E9E3CD" strokeWidth={2} fill="url(#netWorthFill)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
         </article>
 
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-1">
-          <article className="glass h-full rounded-[28px] border p-5">
+          <article className="glass h-full rounded-lg border p-5">
             <h3 className="display-font text-xl font-semibold">Темп изменения</h3>
             <p className="mt-2 text-sm text-[rgb(var(--muted))]">
               {runRate
@@ -338,7 +338,7 @@ export function DashboardOverview() {
             </p>
             <p className="mt-2 text-2xl font-semibold">{runRate ? `${formatCompactRub(runRate.dailyRub)} / день` : "—"}</p>
           </article>
-          <article className="glass h-full rounded-[28px] border p-5">
+          <article className="glass h-full rounded-lg border p-5">
             <h3 className="display-font text-xl font-semibold">Контрольные точки</h3>
             <div className="mt-3 space-y-2 text-sm">
               <p className="text-[rgb(var(--muted))]">Последний срез</p>
@@ -351,7 +351,7 @@ export function DashboardOverview() {
       </section>
 
       <section className="mb-6">
-        <article className="glass rounded-[28px] border p-5">
+        <article className="glass rounded-lg border p-5">
           <div className="mb-4">
             <h3 className="display-font text-2xl font-semibold">Структура по счетам</h3>
             <p className="text-sm text-[rgb(var(--muted))]">
@@ -384,7 +384,7 @@ export function DashboardOverview() {
                     <div key={row.id} className="ui-card flex items-center justify-between gap-4 px-3 py-2">
                       <div className="flex min-w-0 items-center gap-3">
                         <span
-                          className="h-3 w-3 rounded-full"
+                          className="h-3 w-3 rounded"
                           style={{ backgroundColor: accountDonutPalette[index % accountDonutPalette.length] }}
                         />
                         <span className="truncate">{row.name}</span>
@@ -404,7 +404,7 @@ export function DashboardOverview() {
       </section>
 
       <section className="grid gap-4 xl:grid-cols-2 xl:items-stretch">
-        <article className="glass h-full rounded-[28px] border p-5">
+        <article className="glass h-full rounded-lg border p-5">
           <div className="mb-4">
             <h3 className="display-font text-2xl font-semibold">Главные изменения</h3>
             <p className="text-sm text-[rgb(var(--muted))]">
@@ -422,7 +422,7 @@ export function DashboardOverview() {
                 </div>
                 <div
                   className={clsx(
-                    "rounded-full px-3 py-1 text-sm font-medium",
+                    "rounded px-3 py-1 text-sm font-medium",
                     account.deltaRub >= 0
                       ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300"
                       : "bg-rose-500/15 text-rose-700 dark:text-rose-300"
@@ -436,7 +436,7 @@ export function DashboardOverview() {
           </div>
         </article>
 
-        <article className="glass h-full rounded-[28px] border p-5">
+        <article className="glass h-full rounded-lg border p-5">
           <div className="mb-4">
             <h3 className="display-font text-2xl font-semibold">Последние срезы</h3>
             <p className="text-sm text-[rgb(var(--muted))]">Последние контрольные точки с капиталом и дельтой.</p>
@@ -455,7 +455,7 @@ export function DashboardOverview() {
                     {previousPoint ? (
                       <div
                         className={clsx(
-                          "rounded-full px-3 py-1 text-sm font-medium",
+                          "rounded px-3 py-1 text-sm font-medium",
                           pointDelta >= 0
                             ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300"
                             : "bg-rose-500/15 text-rose-700 dark:text-rose-300"
@@ -474,7 +474,7 @@ export function DashboardOverview() {
       </section>
 
       <section className="mt-4">
-        <article className="glass rounded-[28px] border p-5">
+        <article className="glass rounded-lg border p-5">
           <div className="mb-4">
             <h3 className="display-font text-2xl font-semibold">Крупнейшие позиции</h3>
             <p className="text-sm text-[rgb(var(--muted))]">На что приходится основной объем капитала.</p>
@@ -495,3 +495,4 @@ export function DashboardOverview() {
     </AppShell>
   );
 }
+

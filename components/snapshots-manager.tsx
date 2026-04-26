@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import { Plus, Trash2, WalletCards } from "lucide-react";
@@ -138,7 +138,7 @@ export function SnapshotsManager() {
       description="Отдельный экран для ввода нового среза. Заполняешь только текущие балансы по активным счетам на выбранную дату, остальное система считает сама."
     >
       <section className="grid gap-4 xl:grid-cols-[1.15fr_0.85fr]">
-        <div className="glass rounded-[28px] border p-5">
+        <div className="glass rounded-lg border p-5">
           <div className="mb-4 flex items-center justify-between">
             <div>
               <h3 className="display-font text-2xl font-semibold">Новый срез</h3>
@@ -157,9 +157,9 @@ export function SnapshotsManager() {
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-3xl border">
+          <div className="overflow-hidden rounded-lg border">
             <table className="min-w-full text-sm">
-              <thead className="bg-slate-200/60 text-left text-[rgb(var(--muted))] dark:bg-white/5">
+              <thead className="bg-[rgb(var(--text)/0.06)] text-left text-[rgb(var(--muted))] dark:bg-white/5">
                 <tr>
                   <th className="px-4 py-3 font-medium">Счет</th>
                   <th className="px-4 py-3 font-medium">Баланс</th>
@@ -172,7 +172,7 @@ export function SnapshotsManager() {
                     <tr key={account.id} className="border-t">
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
-                          <span className="rounded-2xl bg-white/5 p-2">
+                          <span className="rounded bg-white/5 p-2">
                             <WalletCards className="h-4 w-4" />
                           </span>
                           <div>
@@ -210,7 +210,7 @@ export function SnapshotsManager() {
           </div>
 
           {hasRateErrors ? (
-            <div className="mt-4 rounded-2xl border border-amber-500/40 bg-amber-500/12 px-4 py-3 text-sm text-amber-800 dark:text-amber-200">
+            <div className="mt-4 rounded border border-amber-500/40 bg-amber-500/12 px-4 py-3 text-sm text-amber-800 dark:text-amber-200">
               Не удалось получить курсы для части валют на выбранную дату. Сохранять такой срез нельзя, пока данные не загрузятся.
             </div>
           ) : null}
@@ -219,7 +219,7 @@ export function SnapshotsManager() {
             <button
               onClick={saveSnapshot}
               disabled={isLoadingRates || hasRateErrors}
-              className="inline-flex items-center gap-2 rounded-full bg-cyan-400 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex items-center gap-2 rounded bg-[rgb(var(--accent))] px-5 py-3 text-sm font-semibold text-[#06070C] transition hover:bg-[rgb(var(--accent)/0.86)] disabled:cursor-not-allowed disabled:opacity-50"
             >
               <Plus className="h-4 w-4" />
               Сохранить срез
@@ -228,7 +228,7 @@ export function SnapshotsManager() {
         </div>
 
         <div className="grid gap-4">
-          <div className="glass rounded-[28px] border p-5">
+          <div className="glass rounded-lg border p-5">
             <div className="mb-4">
               <h3 className="display-font text-2xl font-semibold">Последняя история</h3>
               <p className="text-sm text-[rgb(var(--muted))]">Последние значения капитала после сохраненных срезов.</p>
@@ -251,7 +251,7 @@ export function SnapshotsManager() {
                         ) : null}
                         <button
                           onClick={() => deleteSnapshot(snapshot.id)}
-                          className="rounded-full border px-2.5 py-2 text-[rgb(var(--muted))] transition hover:border-rose-400/60 hover:bg-rose-500/10 hover:text-rose-700 dark:hover:text-rose-300"
+                          className="rounded border px-2.5 py-2 text-[rgb(var(--muted))] transition hover:border-rose-400/60 hover:bg-rose-500/10 hover:text-rose-700 dark:hover:text-rose-300"
                           title="Удалить срез"
                         >
                           <Trash2 className="h-4 w-4" />
@@ -264,7 +264,7 @@ export function SnapshotsManager() {
             </div>
           </div>
 
-          <div className="glass rounded-[28px] border p-5">
+          <div className="glass rounded-lg border p-5">
             <div className="mb-4">
               <h3 className="display-font text-2xl font-semibold">Как это работает</h3>
             </div>
@@ -280,3 +280,4 @@ export function SnapshotsManager() {
     </AppShell>
   );
 }
+

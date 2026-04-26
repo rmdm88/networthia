@@ -1,27 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
-  --bg: 248 250 252;
-  --panel: 255 255 255;
-  --panel-soft: 255 255 255 / 0.72;
-  --text: 9 15 25;
-  --muted: 83 98 122;
-  --line: 148 163 184 / 0.28;
-  --focus: 14 165 233;
-}
-
-.dark {
   color-scheme: dark;
-  --bg: 3 10 18;
-  --panel: 10 18 30;
-  --panel-soft: 10 18 30 / 0.72;
-  --text: 235 248 255;
-  --muted: 154 168 190;
-  --line: 148 163 184 / 0.14;
-  --focus: 45 212 191;
+  --bg: 6 7 12;
+  --panel: 13 15 23;
+  --panel-soft: 13 15 23 / 0.78;
+  --text: 233 227 205;
+  --muted: 141 133 112;
+  --line: 233 227 205 / 0.16;
+  --focus: 226 86 60;
+  --accent: 226 86 60;
+  --positive: 127 191 143;
 }
 
 * {
@@ -35,31 +28,31 @@ html {
 body {
   min-height: 100vh;
   background:
-    radial-gradient(circle at top left, rgba(45, 212, 191, 0.18), transparent 28%),
-    radial-gradient(circle at top right, rgba(56, 189, 248, 0.12), transparent 24%),
+    radial-gradient(circle at 18% -12%, rgba(233, 227, 205, 0.08), transparent 30%),
+    radial-gradient(circle at 84% 0%, rgba(226, 86, 60, 0.12), transparent 24%),
     rgb(var(--bg));
   color: rgb(var(--text));
-  font-family: Sora, "Segoe UI", system-ui, sans-serif;
+  font-family: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
 }
 
 .glass {
   background: rgb(var(--panel-soft));
-  backdrop-filter: blur(18px);
+  backdrop-filter: blur(14px);
 }
 
 .grid-surface {
-  background-image: linear-gradient(to right, rgba(148, 163, 184, 0.08) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+  background-image: linear-gradient(to right, rgba(233, 227, 205, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(233, 227, 205, 0.045) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 
 .display-font {
-  font-family: "Space Grotesk", Sora, system-ui, sans-serif;
+  font-family: "Cormorant Garamond", Georgia, serif;
 }
 
 .ui-field {
   border: 1px solid rgb(var(--line));
-  border-radius: 1rem;
+  border-radius: 0.25rem;
   background: rgb(var(--panel) / 0.72);
   color: rgb(var(--text));
   padding: 0.55rem 0.8rem;
@@ -85,5 +78,5 @@ select.ui-field optgroup {
 .ui-card {
   background: rgb(var(--panel) / 0.42);
   border: 1px solid rgb(var(--line));
-  border-radius: 1rem;
+  border-radius: 0.5rem;
 }
