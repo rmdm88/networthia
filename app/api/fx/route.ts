@@ -1,12 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const CRYPTO_SYMBOLS: Record<string, string> = {
-  BTC: "BTCUSDT",
-  ETH: "ETHUSDT",
-  BNB: "BNBUSDT",
-  SOL: "SOLUSDT",
-  TON: "TONUSDT"
-};
+const CRYPTO_SYMBOLS = new Set(["BTC", "ETH", "BNB", "SOL", "TON"]);
+const REQUEST_TIMEOUT_MS = 10_000;
 
 function toCbrDate(date: string) {
   const [year, month, day] = date.split("-");
@@ -15,6 +10,24 @@ function toCbrDate(date: string) {
 
 function getUnixMs(date: string) {
   return new Date(`${date}T00:00:00.000Z`).getTime();
+}
+
+function getUnixSeconds(date: string) {
+  return Math.floor(getUnixMs(date) / 1000);
+}
+
+async function fetchWithTimeout(url: string, init?: RequestInit) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+
+  try {
+    return await fetch(url, {
+      ...init,
+      signal: controller.signal
+    });
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 function parseCbrRate(xml: string, currency: string) {
@@ -42,7 +55,7 @@ function parseCbrRate(xml: string, currency: string) {
 }
 
 async function getCbrXml(date: string) {
-  const response = await fetch(`https://www.cbr.ru/scripts/XML_daily_eng.asp?date_req=${toCbrDate(date)}`, {
+  const response = await fetchWithTimeout(`https://www.cbr.ru/scripts/XML_daily_eng.asp?date_req=${toCbrDate(date)}`, {
     next: { revalidate: 60 * 60 * 12 }
   });
 
@@ -53,30 +66,61 @@ async function getCbrXml(date: string) {
   return response.text();
 }
 
-async function getBinanceClose(symbol: string, date: string) {
-  const startTime = getUnixMs(date);
-  const response = await fetch(
-    `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=1d&startTime=${startTime}&limit=1`,
+async function getCryptoCompareRub(symbol: string, date: string) {
+  const response = await fetchWithTimeout(
+    `https://min-api.cryptocompare.com/data/pricehistorical?fsym=${symbol}&tsyms=RUB&ts=${getUnixSeconds(date)}`,
     {
       next: { revalidate: 60 * 60 * 12 }
     }
   );
 
   if (!response.ok) {
-    throw new Error(`Binance request failed for ${symbol}`);
+    throw new Error(`CryptoCompare request failed for ${symbol}`);
   }
 
-  const payload = (await response.json()) as unknown;
-  if (!Array.isArray(payload) || !Array.isArray(payload[0]) || payload[0].length < 5) {
-    throw new Error(`No Binance candle for ${symbol}`);
+  const payload = (await response.json()) as Record<string, { RUB?: number }>;
+  const rate = payload[symbol]?.RUB;
+
+  if (!Number.isFinite(rate) || !rate || rate <= 0) {
+    throw new Error(`No CryptoCompare RUB rate for ${symbol}`);
   }
 
-  const close = Number(payload[0][4]);
-  if (!Number.isFinite(close) || close <= 0) {
-    throw new Error(`Invalid Binance close for ${symbol}`);
+  return rate;
+}
+
+async function getKuCoinUsdtClose(symbol: string, date: string) {
+  const startAt = getUnixSeconds(date);
+  const endAt = startAt + 60 * 60 * 24;
+  const response = await fetchWithTimeout(
+    `https://api.kucoin.com/api/v1/market/candles?type=1day&symbol=${symbol}-USDT&startAt=${startAt}&endAt=${endAt}`,
+    {
+      next: { revalidate: 60 * 60 * 12 }
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(`KuCoin request failed for ${symbol}`);
+  }
+
+  const payload = (await response.json()) as { code?: string; data?: string[][] };
+  const candle = payload.data?.[0];
+  const close = Number(candle?.[2]);
+
+  if (payload.code !== "200000" || !Number.isFinite(close) || close <= 0) {
+    throw new Error(`No KuCoin candle for ${symbol}`);
   }
 
   return close;
+}
+
+async function getCryptoRubRate(symbol: string, date: string, usdRub: number) {
+  try {
+    const usdtClose = await getKuCoinUsdtClose(symbol, date);
+    return { rate: usdtClose * usdRub, source: "kucoin+cbr" };
+  } catch {
+    const rate = await getCryptoCompareRub(symbol, date);
+    return { rate, source: "cryptocompare" };
+  }
 }
 
 export async function GET(request: NextRequest) {
@@ -104,9 +148,9 @@ export async function GET(request: NextRequest) {
             return [currency, { rate: usdRub, source: "cbr-usd-proxy" }] as const;
           }
 
-          if (currency in CRYPTO_SYMBOLS) {
-            const usdtPrice = await getBinanceClose(CRYPTO_SYMBOLS[currency], date);
-            return [currency, { rate: usdtPrice * usdRub, source: "binance+cbr" }] as const;
+          if (CRYPTO_SYMBOLS.has(currency)) {
+            const cryptoRate = await getCryptoRubRate(currency, date, usdRub);
+            return [currency, cryptoRate] as const;
           }
 
           return [currency, { rate: parseCbrRate(cbrXml, currency), source: "cbr" }] as const;
